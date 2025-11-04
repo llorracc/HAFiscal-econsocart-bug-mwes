@@ -1,0 +1,66 @@
+# LaTeX auxiliary files
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.xdv
+
+# LaTeX build directories
+_minted-*/
+.latex-build/
+
+# Generated PDFs (except we may want to keep MWE PDFs for demonstration)
+# Uncomment if you want to exclude all PDFs:
+# *.pdf
+
+# Compilation logs
+compile-output.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Python (if any Python scripts are added)
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+ENV/
+env/
+
+# Jupyter Notebook (if notebooks are added for Binder)
+.ipynb_checkpoints
+
+# Test artifacts
+test.png
+

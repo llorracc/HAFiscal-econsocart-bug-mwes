@@ -1,0 +1,58 @@
+% Minimal Working Example: Font Shape Error in econsocart.cls
+% Bug: LaTeX Error: Font T1/put/m/scit/12 not found
+% Date: November 4, 2025
+
+\documentclass[qe]{econsocart}
+
+\begin{document}
+
+\title{Font Shape Bug Demonstration}
+
+\author{
+  Christopher Carroll\thanks{Johns Hopkins University, NBER, and econ-ark.org}
+}
+
+\begin{frontmatter}
+\maketitle
+
+\begin{abstract}
+This minimal document demonstrates a font shape error in the \texttt{econsocart.cls} 
+document class when using small caps combined with italic emphasis.
+\end{abstract}
+\end{frontmatter}
+
+\section{The Problem}
+
+This paragraph contains normal text. Now we demonstrate the bug:
+
+% THIS LINE TRIGGERS THE BUG:
+This text uses \textsc{small caps} and this uses \textit{italic}, 
+but combining them as \textsc{\textit{small caps italic}} causes:
+
+\textbf{LaTeX Error: Font T1/put/m/scit/12 not found}
+
+The error occurs because the Utopia font (T1/put) does not define the 
+\texttt{scit} font shape (small caps + italic combined).
+
+\section{Additional Problematic Combinations}
+
+The following font shape combinations are also undefined:
+
+\begin{itemize}
+    \item \texttt{scit}: small caps + italic → \textsc{\textit{fails here}}
+    \item \texttt{scsl}: small caps + slanted → \textsc{\textsl{fails here}}
+    \item \texttt{slit}: slanted + italic → \textsl{\textit{fails here}}
+\end{itemize}
+
+\section{Expected vs. Actual Behavior}
+
+\textbf{Expected}: LaTeX should either:
+\begin{enumerate}
+    \item Provide the combined font shape, or
+    \item Silently substitute a close approximation
+\end{enumerate}
+
+\textbf{Actual}: Compilation fails with an error, preventing document generation.
+
+\end{document}
+

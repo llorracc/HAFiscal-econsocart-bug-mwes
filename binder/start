@@ -1,0 +1,45 @@
+#!/bin/bash
+# Binder start script - displays welcome message and opens terminal
+
+cat << 'EOF'
+
+╔════════════════════════════════════════════════════════════╗
+║  econsocart.cls Bug Demonstrations                         ║
+║  Interactive Binder Environment                            ║
+╚════════════════════════════════════════════════════════════╝
+
+This environment allows you to reproduce bugs in econsocart.cls
+used by Quantitative Economics journal.
+
+┌────────────────────────────────────────────────────────────┐
+│ Bug 1: Font Shape Error (Compilation Failure)             │
+├────────────────────────────────────────────────────────────┤
+│   cd font-shape-bug/                                       │
+│   ./compile.sh                                             │
+│                                                            │
+│ Expected: Compilation fails with font error               │
+└────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────┐
+│ Bug 2: Garbled Headers (Visual Defect)                    │
+├────────────────────────────────────────────────────────────┤
+│   cd headers-draft-bug/                                    │
+│   ./compile.sh                                             │
+│   # Then open the generated PDF to see garbled headers    │
+│                                                            │
+│ Expected: Compilation succeeds but headers are garbled    │
+└────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────┐
+│ Documentation                                              │
+├────────────────────────────────────────────────────────────┤
+│   Main README:        cat README.md                       │
+│   Font bug details:   cat font-shape-bug/README.md        │
+│   Headers bug details: cat headers-draft-bug/README.md    │
+└────────────────────────────────────────────────────────────┘
+
+Use the terminal below to navigate and run commands.
+All LaTeX tools (pdflatex, latexmk) are available.
+
+EOF
+

@@ -1,0 +1,56 @@
+% workaround.sty
+% Fixes font shape error in econsocart.cls when using Utopia fonts
+% Bug: LaTeX Error: Font T1/put/m/scit/12 not found
+%
+% Usage: \usepackage{workaround}
+%
+% Author: Christopher Carroll
+% Date: November 4, 2025
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{workaround}[2025/11/04 Fix for econsocart Utopia font shapes]
+
+% Declare missing font shape combinations for Utopia font (T1/put)
+% These declarations map unavailable combined shapes to available base shapes
+%
+% Strategy:
+%   scit (small caps + italic) → sc (small caps only)
+%   scsl (small caps + slanted) → sc (small caps only)
+%   slit (slanted + italic) → sl (slanted only)
+%
+% Note: We lose the italic/slanted aspect but preserve the primary style
+
+\makeatletter
+
+\AtBeginDocument{%
+  % Must use \AtBeginDocument to override t1put.fd which loads during initialization
+  
+  % ---- Small Caps + Italic (scit) ----
+  % Medium weight
+  \DeclareFontShape{T1}{put}{m}{scit}{<->ssub*put/m/sc}{}%
+  % Bold weight
+  \DeclareFontShape{T1}{put}{b}{scit}{<->ssub*put/b/sc}{}%
+  % Bold extended weight
+  \DeclareFontShape{T1}{put}{bx}{scit}{<->ssub*put/bx/sc}{}%
+  
+  % ---- Small Caps + Slanted (scsl) ----
+  % Medium weight
+  \DeclareFontShape{T1}{put}{m}{scsl}{<->ssub*put/m/sc}{}%
+  % Bold weight
+  \DeclareFontShape{T1}{put}{b}{scsl}{<->ssub*put/b/sc}{}%
+  % Bold extended weight
+  \DeclareFontShape{T1}{put}{bx}{scsl}{<->ssub*put/bx/sc}{}%
+  
+  % ---- Slanted + Italic (slit) ----
+  % Medium weight
+  \DeclareFontShape{T1}{put}{m}{slit}{<->ssub*put/m/sl}{}%
+  % Bold weight
+  \DeclareFontShape{T1}{put}{b}{slit}{<->ssub*put/b/sl}{}%
+  % Bold extended weight (uncommon but included for completeness)
+  \DeclareFontShape{T1}{put}{bx}{slit}{<->ssub*put/bx/sl}{}%
+}
+
+\makeatother
+
+\endinput
+

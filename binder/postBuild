@@ -1,0 +1,63 @@
+#!/bin/bash
+# Binder post-build script
+# Sets up the LaTeX environment for econsocart bug demonstrations
+
+set -e
+
+echo "=========================================="
+echo "Setting up econsocart bug MWE environment"
+echo "=========================================="
+
+# Make compile scripts executable
+chmod +x font-shape-bug/compile.sh
+chmod +x headers-draft-bug/compile.sh
+
+# Verify LaTeX installation
+echo ""
+echo "Verifying LaTeX installation..."
+pdflatex --version | head -1
+
+# Verify econsocart.cls is available
+echo ""
+echo "Checking for econsocart.cls..."
+if kpsewhich econsocart.cls > /dev/null 2>&1; then
+    echo "✅ Found econsocart.cls at: $(kpsewhich econsocart.cls)"
+else
+    echo "⚠️  econsocart.cls not found in TeX distribution"
+    echo "    The MWEs will need the class file in the local directory"
+fi
+
+# Create a welcome message
+cat > /tmp/binder-welcome.txt << 'EOF'
+========================================
+econsocart.cls Bug Demonstrations
+========================================
+
+This Binder environment allows you to reproduce two bugs in the
+econsocart.cls document class used by Quantitative Economics.
+
+Available demonstrations:
+
+1. Font Shape Bug (compilation failure)
+   cd font-shape-bug/
+   ./compile.sh
+
+2. Garbled Headers Bug (visual defect)
+   cd headers-draft-bug/
+   ./compile.sh
+
+Each directory contains:
+- MWE LaTeX file
+- Detailed README.md
+- Workaround implementation
+
+For more information, see the main README.md
+========================================
+EOF
+
+echo ""
+cat /tmp/binder-welcome.txt
+
+echo ""
+echo "✅ Binder environment ready"
+
