@@ -1,14 +1,14 @@
 # HAFiscal econsocart.cls Bug Demonstrations
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/llorracc/HAFiscal-econsocart-bug-mwes/main?filepath=Demo.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/llorracc/HAFiscal-econsocart-bug-mwes/main?filepath=Interactive-Bug-Demonstrations-With-Workarounds.ipynb)
 
-This repository contains Minimal Working Examples (MWEs) demonstrating bugs in the `econsocart.cls` document class used by Quantitative Economics journal.
+This repository contains Minimal Working Examples (MWEs) demonstrating two modest but problematic bugs in the `econsocart.cls` document class used by Quantitative Economics journal.
 
 **Repository Purpose**: Standalone bug demonstrations for the Econometric Society data editor and maintainers
 
-**Context**: These bugs were discovered while preparing a submission to Quantitative Economics using the official `econsocart` document class (version 2.0, 2023/12/01).
+**Context**: These bugs were discovered while preparing a submission to Quantitative Economics using the official `econsocart` document class (version 2.0, 2023/12/01). While individually modest, diagnosing their root causes and constructing reliable workarounds required considerable effort.
 
-**Interactive Demo**: Click the Binder badge above to launch an interactive environment where you can reproduce both bugs without any local installation.
+**Interactive Demo**: Click the Binder badge above to launch an interactive environment where you can reproduce both bugs and test workarounds without any local installation. Alternatively, see the [Docker section](#docker-alternative) below for a containerized local environment.
 
 ---
 
@@ -99,11 +99,48 @@ Submitted to Quantitative EconomicsMinimal Working Example
 
 ---
 
+## Docker Alternative
+
+For users who prefer a local containerized environment over Binder:
+
+### Build and Run with Docker
+
+```bash
+# Clone the repository
+git clone https://github.com/llorracc/HAFiscal-econsocart-bug-mwes.git
+cd HAFiscal-econsocart-bug-mwes
+
+# Build the Docker image
+docker build -t econsocart-bug-mwes .
+
+# Run the container
+docker run -it --rm -v $(pwd):/workspace econsocart-bug-mwes
+```
+
+Inside the container, you can run the demonstration scripts:
+
+```bash
+cd font-shape-bug && ./compile.sh
+cd ../headers-draft-bug && ./compile.sh
+```
+
+Or start a Jupyter notebook server:
+
+```bash
+jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+```
+
+Then access the notebook at `http://localhost:8888` in your browser.
+
+---
+
 ## Repository Structure
 
 ```
 HAFiscal-econsocart-bug-mwes/
 ├── README.md                       # This file
+├── Dockerfile                      # Docker container configuration
+├── Interactive-Bug-Demonstrations-With-Workarounds.ipynb  # Jupyter demo
 ├── font-shape-bug/
 │   ├── README.md                  # Detailed font bug explanation
 │   ├── mwe-font-shape.tex         # Minimal working example

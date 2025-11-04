@@ -2,7 +2,8 @@
 
 **Bug Type**: Compilation Failure  
 **Severity**: Critical (prevents document compilation)  
-**Status**: Reproducible in econsocart.cls v2.0 (2023/12/01)
+**Status**: Reproducible in econsocart.cls v2.0 (2023/12/01)  
+**Note**: While modest in scope, diagnosing this issue and constructing a reliable workaround required considerable effort
 
 ---
 

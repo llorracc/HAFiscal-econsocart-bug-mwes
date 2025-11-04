@@ -1,0 +1,51 @@
+# Git
+.git
+.gitignore
+
+# LaTeX auxiliary files
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.xdv
+
+# LaTeX build directories
+_minted-*/
+.latex-build/
+
+# Compilation logs
+compile-output.log
+*.tmp
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Jupyter
+.ipynb_checkpoints
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Documentation (will be copied anyway)
+README.md
+
+# Development files
+.vscode/
+.idea/
+*.swp
+*~
+

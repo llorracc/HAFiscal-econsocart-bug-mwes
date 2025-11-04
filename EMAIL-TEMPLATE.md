@@ -7,12 +7,13 @@
 
 Dear Data Editor,
 
-I am writing to report two bugs discovered in the `econsocart.cls` document class (version 2.0, 2023/12/01) while preparing my submission to Quantitative Economics.
+I am writing to report two modest but problematic bugs discovered in the `econsocart.cls` document class (version 2.0, 2023/12/01) while preparing my submission to Quantitative Economics. While individually modest in scope, diagnosing their root causes and constructing reliable workarounds required considerable effort.
 
-I have created a standalone repository with Minimal Working Examples (MWEs) that demonstrate both issues:
+I have created a standalone repository with Minimal Working Examples (MWEs) that demonstrate both issues, along with tested workarounds:
 
 **Repository**: https://github.com/llorracc/HAFiscal-econsocart-bug-mwes  
-**Interactive Binder**: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/llorracc/HAFiscal-econsocart-bug-mwes/main)
+**Interactive Binder**: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/llorracc/HAFiscal-econsocart-bug-mwes/main?filepath=Interactive-Bug-Demonstrations-With-Workarounds.ipynb)  
+**Docker Alternative**: Available for local reproduction (see repository README)
 
 ---
 
@@ -57,7 +58,7 @@ Submitted to Quantitative EconomicsWelfare and Spending Effects...
 
 Click the Binder badge to launch an interactive environment:
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/llorracc/HAFiscal-econsocart-bug-mwes/main)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/llorracc/HAFiscal-econsocart-bug-mwes/main?filepath=Interactive-Bug-Demonstrations-With-Workarounds.ipynb)
 
 Then run:
 ```bash
@@ -65,7 +66,17 @@ cd font-shape-bug/ && ./compile.sh
 cd ../headers-draft-bug/ && ./compile.sh
 ```
 
-### Option 2: Clone Repository Locally
+### Option 2: Use Docker (Containerized Local Environment)
+
+```bash
+git clone https://github.com/llorracc/HAFiscal-econsocart-bug-mwes.git
+cd HAFiscal-econsocart-bug-mwes
+docker build -t econsocart-bug-mwes .
+docker run -it --rm econsocart-bug-mwes
+# Then run compile scripts as in Option 1
+```
+
+### Option 3: Clone Repository Locally
 
 ```bash
 git clone https://github.com/llorracc/HAFiscal-econsocart-bug-mwes.git
@@ -80,16 +91,17 @@ pdflatex mwe-headers-draft.tex  # Compiles but headers are garbled
 ## Impact
 
 **Font Bug**: 
-- Severity: **Critical**
-- Prevents document compilation
-- Affects any document using nested text formatting
+- Severity: **Critical** (prevents compilation)
+- Affects any document using nested text formatting (e.g., `\textsc{\textit{...}}`)
+- Workaround is straightforward once diagnosed, but diagnosing required considerable effort
 
 **Headers Bug**:
-- Severity: **Major**
-- Creates unprofessional appearance
-- Affects all QE draft submissions
+- Severity: **Major** (visual defect)
+- Creates unprofessional appearance in draft submissions
+- Affects all QE submissions using draft mode
+- Workaround implementation was non-trivial due to interaction with line numbering system
 
-Both bugs require workarounds for authors to produce acceptable submissions.
+While these bugs are individually modest in scope, both required significant time to diagnose and construct reliable workarounds. Authors currently need these workarounds to produce acceptable submissions.
 
 ---
 

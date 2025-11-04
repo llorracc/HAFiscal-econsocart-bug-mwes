@@ -2,7 +2,8 @@
 
 **Bug Type**: Visual Defect  
 **Severity**: Major (affects all QE draft submissions)  
-**Status**: Reproducible in econsocart.cls v2.0 (2023/12/01)
+**Status**: Reproducible in econsocart.cls v2.0 (2023/12/01)  
+**Note**: While individually modest, this bug's interaction with the line numbering system made constructing a reliable workaround non-trivial
 
 ---
 
