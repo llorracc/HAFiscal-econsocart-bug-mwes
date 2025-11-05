@@ -64,3 +64,5 @@ env/
 # Test artifacts
 test.png
 
+.specstory/**
+.cursor*

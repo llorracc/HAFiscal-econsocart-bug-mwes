@@ -33,7 +33,7 @@ I have created a standalone repository with Minimal Working Examples (MWEs) that
 
 ---
 
-## Bug #2: Garbled Headers in Draft Mode (Major - Visual Defect)
+## Bug #2: Garbled Headers in Draft Mode (Visual Defect)
 
 **Symptom**: Odd-page headers show concatenated journal name + title:
 ```
