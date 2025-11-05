@@ -81,7 +81,7 @@ docker run -it --rm econsocart-bug-mwes
 ```bash
 git clone https://github.com/llorracc/HAFiscal-econsocart-bug-mwes.git
 cd HAFiscal-econsocart-bug-mwes/font-shape-bug
-pdflatex mwe-font-shape.tex  # Will fail with font error
+pdflatex mwe-font-shape.tex  # May fail or succeed with warnings (varies by system)
 cd ../headers-draft-bug
 pdflatex mwe-headers-draft.tex  # Compiles but headers are garbled
 ```
@@ -92,6 +92,8 @@ pdflatex mwe-headers-draft.tex  # Compiles but headers are garbled
 
 **Font Bug**: 
 - Severity: **Major** (behavior varies by TeX distribution)
+- Some systems: Compilation **fails** with font errors
+- Other systems: Compilation **succeeds** with warnings and font substitution
 - Affects any document using nested text formatting (e.g., `\textsc{\textit{...}}`)
 - Workaround is straightforward once diagnosed, but diagnosing required considerable effort
 

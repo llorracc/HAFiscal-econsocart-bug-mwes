@@ -36,8 +36,8 @@ Each bug has its own directory with:
 cd font-shape-bug/
 ./compile.sh
 # Tests BOTH:
-#   1. Bug: Fails with font error (mwe-font-shape.tex)
-#   2. Fix: Succeeds with workaround (mwe-font-shape-fixed.tex)
+#   1. Bug: May fail or warn (mwe-font-shape.tex) - behavior varies by system
+#   2. Fix: Clean compilation (mwe-font-shape-fixed.tex) - works on all systems
 ```
 
 ### Testing Headers Bug (and Fix)
@@ -54,16 +54,19 @@ cd headers-draft-bug/
 
 ## Bug 1: Font Shape Error
 
-**Error Message**: `LaTeX Error: Font T1/put/m/scit/12 not found`
+**Error/Warning Message**: `LaTeX Font Warning: Font shape 'T1/put/m/scit' undefined`
 
 **Root Cause**: The Utopia font (`t1put.fd`) does not define combined font shapes:
 - `scit` (small caps + italic)
 - `scsl` (small caps + slanted)
 - `slit` (slanted + italic)
 
-When LaTeX encounters text that requires these combinations (e.g., `\textsc{\textit{...}}`), compilation fails.
+When LaTeX encounters text that requires these combinations (e.g., `\textsc{\textit{...}}`), behavior varies by TeX distribution.
 
-**Impact**: **Major** - Behavior varies by TeX distribution (warnings with font substitution or compilation errors)
+**Impact**: **Major** - Behavior varies by TeX distribution:
+- Some systems: Compilation **fails** with errors
+- Other systems: Compilation **succeeds** with warnings and font substitution (may degrade typography)
+- Either way: Missing font shape definitions should be declared
 
 **Workaround**: ✅ **Proven** - Declare missing font shapes manually (see `font-shape-bug/README.md` and `mwe-font-shape-fixed.tex`)
 

@@ -13,7 +13,10 @@
 
 **Trigger**: Using `\textsc{\textit{...}}` or other combinations of small caps with italic/slanted text
 
-**Impact**: Behavior varies by TeX distribution - may produce warnings with font substitution (degraded typography) or compilation errors
+**Impact**: Behavior varies by TeX distribution:
+- **Some systems**: Compilation **fails** with errors (e.g., `! LaTeX Error: Font T1/put/m/scit/12 not found`)
+- **Other systems**: Compilation **succeeds** with warnings and automatic font substitution
+- **Either way**: The bug exists - missing font shapes should be properly declared
 
 ---
 
@@ -24,12 +27,20 @@
    pdflatex mwe-font-shape.tex
    ```
 
-2. **Expected Result**: Compilation fails with:
-   ```
-   ! LaTeX Error: Font T1/put/m/scit/12 not found.
-   ```
+2. **Possible Results** (varies by TeX distribution):
+   - **Option A**: Compilation **fails** with error:
+     ```
+     ! LaTeX Error: Font T1/put/m/scit/12 not found.
+     ```
+   - **Option B**: Compilation **succeeds** with warnings like:
+     ```
+     LaTeX Font Warning: Font shape 'T1/put/m/scit' undefined
+     (Font)              using 'T1/put/m/sc' instead
+     ```
 
-3. **Location in MWE**: Line 30-31 contain the problematic text
+3. **Location in MWE**: Lines 30-31 contain the problematic text
+
+**Note**: Whether it fails or warns, the bug exists - the font shapes are undefined and need to be declared.
 
 ---
 
@@ -55,7 +66,9 @@ The `econsocart.cls` document class uses the **Utopia font family** (T1/put enco
 2. LaTeX interprets this as: "Switch to small caps, then switch to italic"
 3. LaTeX looks for font shape: `T1/put/m/scit/12` (small caps + italic)
 4. `t1put.fd` does not define this shape
-5. LaTeX has no fallback → **compilation error**
+5. LaTeX behavior varies by distribution:
+   - **Stricter systems**: Compilation error (no fallback available)
+   - **Lenient systems**: Warning + automatic substitution (uses `sc` instead of `scit`)
 
 ### Why This Matters
 
@@ -157,9 +170,10 @@ Run the compile script to test both bug and fix:
 ```
 
 This will:
-1. Compile `mwe-font-shape.tex` (should FAIL)
-2. Compile `mwe-font-shape-fixed.tex` (should SUCCEED)
+1. Compile `mwe-font-shape.tex` (may fail or succeed with warnings, depending on system)
+2. Compile `mwe-font-shape-fixed.tex` (should succeed WITHOUT errors or warnings)
 3. Generate `mwe-font-shape-fixed.pdf` showing the fix works
+4. Show comparison proving the workaround eliminates the problem
 
 ### Manual Test
 
@@ -204,10 +218,11 @@ The file `mwe-font-shape-fixed.tex` demonstrates that the workaround successfull
 **Severity**: 🟠 **Major**
 
 **Reason**: 
-- Inconsistent behavior across TeX distributions (warnings vs. errors)
-- When it fails, no automatic fallback (but some systems do substitute fonts)
-- Common text patterns trigger the bug
-- Affects multiple font weight combinations
+- **Inconsistent behavior** across TeX distributions (some fail, some warn)
+- **When it fails**: Complete compilation failure (blocking)
+- **When it warns**: Silent font substitution may degrade typography
+- **Common patterns**: Many documents naturally use these combinations
+- **Multiple combinations affected**: scit, scsl, slit across different weights
 
 **Affected Users**:
 - Any QE submission using nested text formatting
