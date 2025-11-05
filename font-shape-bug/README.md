@@ -148,10 +148,29 @@ In the class file, after font loading (around line 100-200):
 
 ## Testing the Workaround
 
-1. **Apply workaround**: Use `workaround.sty` or add declarations to preamble
-2. **Compile**: `pdflatex mwe-font-shape.tex`
-3. **Expected**: Compilation succeeds without errors
+### Automated Test (Recommended)
+
+Run the compile script to test both bug and fix:
+
+```bash
+./compile.sh
+```
+
+This will:
+1. Compile `mwe-font-shape.tex` (should FAIL)
+2. Compile `mwe-font-shape-fixed.tex` (should SUCCEED)
+3. Generate `mwe-font-shape-fixed.pdf` showing the fix works
+
+### Manual Test
+
+1. **Apply workaround**: See `mwe-font-shape-fixed.tex` which includes `\usepackage{workaround}`
+2. **Compile**: `pdflatex mwe-font-shape-fixed.tex`
+3. **Expected**: Compilation succeeds without errors ✅
 4. **Visual Check**: Text appears with small caps (italic aspect gracefully degrades to non-italic small caps)
+
+### ✅ Workaround Status: PROVEN TO WORK
+
+The file `mwe-font-shape-fixed.tex` demonstrates that the workaround successfully compiles, producing `mwe-font-shape-fixed.pdf`.
 
 ---
 
@@ -160,9 +179,10 @@ In the class file, after font loading (around line 100-200):
 | File | Purpose |
 |------|---------|
 | `mwe-font-shape.tex` | Minimal example that triggers the bug |
+| `mwe-font-shape-fixed.tex` | ✅ **Demonstrates workaround works** |
 | `README.md` | This file - detailed bug explanation |
-| `compile.sh` | Compilation script for testing |
-| `workaround.sty` | Package with font shape declarations |
+| `compile.sh` | Tests **both** bug and fix |
+| `workaround.sty` | **Proven** fix implementation |
 
 ---
 

@@ -25,24 +25,29 @@ This repository contains Minimal Working Examples (MWEs) demonstrating two modes
 
 Each bug has its own directory with:
 - **MWE LaTeX file**: Minimal code to reproduce the bug
+- **Fixed LaTeX file**: Demonstrates the workaround actually works
 - **README.md**: Detailed explanation, root cause, workaround
-- **Compilation script**: `compile.sh` to test the bug
-- **Expected output**: Description of the bug symptoms
+- **Compilation script**: `compile.sh` to test **both** bug and fix
+- **workaround.sty**: Proven working fix
 
-### Testing Font Shape Bug
+### Testing Font Shape Bug (and Fix)
 
 ```bash
 cd font-shape-bug/
 ./compile.sh
-# Should fail with: LaTeX Error: Font T1/put/m/scit/12 not found
+# Tests BOTH:
+#   1. Bug: Fails with font error (mwe-font-shape.tex)
+#   2. Fix: Succeeds with workaround (mwe-font-shape-fixed.tex)
 ```
 
-### Testing Headers Bug
+### Testing Headers Bug (and Fix)
 
 ```bash
 cd headers-draft-bug/
 ./compile.sh
-# Compiles successfully but page headers are garbled
+# Tests BOTH:
+#   1. Bug: Garbled headers (mwe-headers-draft.pdf)
+#   2. Fix: Clean headers (mwe-headers-draft-fixed.pdf)
 ```
 
 ---
@@ -60,7 +65,7 @@ When LaTeX encounters text that requires these combinations (e.g., `\textsc{\tex
 
 **Impact**: **Major** - Behavior varies by TeX distribution (warnings with font substitution or compilation errors)
 
-**Workaround**: Declare missing font shapes manually (see `font-shape-bug/README.md`)
+**Workaround**: ✅ **Proven** - Declare missing font shapes manually (see `font-shape-bug/README.md` and `mwe-font-shape-fixed.tex`)
 
 ---
 
@@ -75,7 +80,7 @@ Submitted to Quantitative EconomicsMinimal Working Example
 
 **Impact**: **Major** - Unprofessional appearance in draft submissions
 
-**Workaround**: Override header definitions manually (see `headers-draft-bug/README.md`)
+**Workaround**: ✅ **Proven** - Override header definitions manually (see `headers-draft-bug/README.md` and `mwe-headers-draft-fixed.tex`)
 
 ---
 
@@ -143,14 +148,16 @@ HAFiscal-econsocart-bug-mwes/
 ├── Interactive-Bug-Demonstrations-With-Workarounds.ipynb  # Jupyter demo
 ├── font-shape-bug/
 │   ├── README.md                  # Detailed font bug explanation
-│   ├── mwe-font-shape.tex         # Minimal working example
-│   ├── compile.sh                 # Compilation script
-│   └── workaround.sty             # Fix implementation
+│   ├── mwe-font-shape.tex         # MWE that reproduces the bug
+│   ├── mwe-font-shape-fixed.tex   # ✅ Demonstrates working fix
+│   ├── compile.sh                 # Tests both bug and fix
+│   └── workaround.sty             # Proven fix implementation
 ├── headers-draft-bug/
 │   ├── README.md                  # Detailed headers bug explanation
-│   ├── mwe-headers-draft.tex      # Minimal working example
-│   ├── compile.sh                 # Compilation script
-│   └── workaround.sty             # Fix implementation
+│   ├── mwe-headers-draft.tex      # MWE that reproduces the bug
+│   ├── mwe-headers-draft-fixed.tex # ✅ Demonstrates working fix
+│   ├── compile.sh                 # Tests both bug and fix
+│   └── workaround.sty             # Proven fix implementation
 └── EMAIL-TEMPLATE.md              # Template for reporting to data editor
 ```
 

@@ -203,10 +203,33 @@ This would make QE trigger the same branch as ECTA.
 
 ## Testing the Workaround
 
-1. **Apply workaround**: Use `workaround.sty` or add header redefinitions
-2. **Compile**: `pdflatex mwe-headers-draft.tex`
-3. **Check page 2**: Header should show only the title (right side) and only journal name (left side, if on even page)
-4. **Verify line numbers**: In draft mode, line numbers should still appear
+### Automated Test (Recommended)
+
+Run the compile script to test both bug and fix:
+
+```bash
+./compile.sh
+```
+
+This will:
+1. Compile `mwe-headers-draft.tex` (garbled headers)
+2. Compile `mwe-headers-draft-fixed.tex` (clean headers)
+3. Generate both PDFs for side-by-side comparison
+
+### Manual Test
+
+1. **Apply workaround**: See `mwe-headers-draft-fixed.tex` which includes `\usepackage{workaround}`
+2. **Compile**: `pdflatex mwe-headers-draft-fixed.tex` (run twice)
+3. **Check page 2**: Header shows only the title (right side) ✅
+4. **Verify line numbers**: In draft mode, line numbers still appear correctly ✅
+
+### ✅ Workaround Status: PROVEN TO WORK
+
+Compare the PDFs:
+- **Broken**: `mwe-headers-draft.pdf` → Page 2 shows concatenated text
+- **Fixed**: `mwe-headers-draft-fixed.pdf` → Page 2 shows clean title only
+
+The workaround successfully produces professional, readable headers.
 
 ---
 
@@ -263,9 +286,10 @@ An additional complexity: when fixing headers in draft mode, the workaround must
 | File | Purpose |
 |------|---------|
 | `mwe-headers-draft.tex` | Minimal example demonstrating the bug |
+| `mwe-headers-draft-fixed.tex` | ✅ **Demonstrates workaround works** |
 | `README.md` | This file - detailed bug explanation |
-| `compile.sh` | Compilation script for testing |
-| `workaround.sty` | Package with header redefinitions |
+| `compile.sh` | Tests **both** bug and fix |
+| `workaround.sty` | **Proven** fix implementation |
 
 ---
 
