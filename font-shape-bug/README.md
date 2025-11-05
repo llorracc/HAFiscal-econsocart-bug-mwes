@@ -1,7 +1,7 @@
 # Bug Report: Font Shape Error in econsocart.cls
 
-**Bug Type**: Compilation Failure  
-**Severity**: Critical (prevents document compilation)  
+**Bug Type**: Undefined Font Shapes  
+**Severity**: Major (behavior varies by TeX distribution)  
 **Status**: Reproducible in econsocart.cls v2.0 (2023/12/01)  
 **Note**: While modest in scope, diagnosing this issue and constructing a reliable workaround required considerable effort
 
@@ -9,11 +9,11 @@
 
 ## Quick Summary
 
-**Error**: `LaTeX Error: Font T1/put/m/scit/12 not found`
+**Error/Warning**: `LaTeX Font Warning: Font shape 'T1/put/m/scit' undefined`
 
 **Trigger**: Using `\textsc{\textit{...}}` or other combinations of small caps with italic/slanted text
 
-**Impact**: Document fails to compile
+**Impact**: Behavior varies by TeX distribution - may produce warnings with font substitution (degraded typography) or compilation errors
 
 ---
 
@@ -181,11 +181,11 @@ In the class file, after font loading (around line 100-200):
 
 ## Impact Assessment
 
-**Severity**: 🔴 **Critical**
+**Severity**: 🟠 **Major**
 
 **Reason**: 
-- Complete compilation failure (not just a warning)
-- No automatic fallback or substitution
+- Inconsistent behavior across TeX distributions (warnings vs. errors)
+- When it fails, no automatic fallback (but some systems do substitute fonts)
 - Common text patterns trigger the bug
 - Affects multiple font weight combinations
 

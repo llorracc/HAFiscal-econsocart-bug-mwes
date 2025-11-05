@@ -58,7 +58,7 @@ cd headers-draft-bug/
 
 When LaTeX encounters text that requires these combinations (e.g., `\textsc{\textit{...}}`), compilation fails.
 
-**Impact**: **Critical** - Documents cannot compile
+**Impact**: **Major** - Behavior varies by TeX distribution (warnings with font substitution or compilation errors)
 
 **Workaround**: Declare missing font shapes manually (see `font-shape-bug/README.md`)
 

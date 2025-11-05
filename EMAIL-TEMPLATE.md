@@ -17,7 +17,7 @@ I have created a standalone repository with Minimal Working Examples (MWEs) that
 
 ---
 
-## Bug #1: Font Shape Error (Critical - Prevents Compilation)
+## Bug #1: Font Shape Error (Major - Inconsistent Behavior)
 
 **Error Message**: `LaTeX Error: Font T1/put/m/scit/12 not found`
 
@@ -91,7 +91,7 @@ pdflatex mwe-headers-draft.tex  # Compiles but headers are garbled
 ## Impact
 
 **Font Bug**: 
-- Severity: **Critical** (prevents compilation)
+- Severity: **Major** (behavior varies by TeX distribution)
 - Affects any document using nested text formatting (e.g., `\textsc{\textit{...}}`)
 - Workaround is straightforward once diagnosed, but diagnosing required considerable effort
 
