@@ -6,7 +6,7 @@ This repository contains Minimal Working Examples (MWEs) demonstrating two modes
 
 **Repository Purpose**: Standalone bug demonstrations for the Econometric Society data editor and maintainers
 
-**Context**: These bugs were discovered while preparing a submission to Quantitative Economics using the official `econsocart` document class (version 2.0, 2023/12/01). While individually modest, diagnosing their root causes and constructing reliable workarounds required considerable effort.
+**Context**: These bugs were discovered while preparing a submission to Quantitative Economics using the official `econsocart` document class (version 2.0, 2023/12/01). While individually modest, diagnosing their root causes and constructing reliable workarounds required some effort.
 
 **Interactive Demo**: Click the Binder badge above to launch an interactive environment where you can reproduce both bugs and test workarounds without any local installation. Alternatively, see the [Docker section](#docker-alternative) below for a containerized local environment.
 
