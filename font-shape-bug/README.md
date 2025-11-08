@@ -1,7 +1,7 @@
-# Bug Report: Font Shape Error in econsocart.cls
+# Font Shape Warning in econsocart.cls
 
-**Bug Type**: Undefined Font Shapes  
-**Severity**: Major (behavior varies by TeX distribution)  
+**Issue Type**: Undefined Font Shapes (produces warnings)  
+**Severity**: Minor (code quality issue - produces compilation warnings)  
 **Status**: Reproducible in econsocart.cls v2.0 (2023/12/01)  
 **Note**: While modest in scope, diagnosing this issue and constructing a reliable workaround required considerable effort
 
@@ -9,14 +9,15 @@
 
 ## Quick Summary
 
-**Error/Warning**: `LaTeX Font Warning: Font shape 'T1/put/m/scit' undefined`
+**Warning**: `LaTeX Font Warning: Font shape 'T1/put/m/scit' undefined`
 
 **Trigger**: Using `\textsc{\textit{...}}` or other combinations of small caps with italic/slanted text
 
-**Impact**: Behavior varies by TeX distribution:
-- **Some systems**: Compilation **fails** with errors (e.g., `! LaTeX Error: Font T1/put/m/scit/12 not found`)
-- **Other systems**: Compilation **succeeds** with warnings and automatic font substitution
-- **Either way**: The bug exists - missing font shapes should be properly declared
+**Impact**: On modern TeX distributions, this produces **warnings** (not errors):
+- Compilation **succeeds** with font substitution warnings
+- LaTeX automatically substitutes available font shapes (e.g., italic instead of small-caps-italic)
+- The document compiles and renders, but without proper font shape declarations
+- This is a **code quality issue** rather than a critical bug - the missing font shapes should be properly declared to eliminate warnings
 
 ---
 
@@ -27,20 +28,15 @@
    pdflatex mwe-font-shape.tex
    ```
 
-2. **Possible Results** (varies by TeX distribution):
-   - **Option A**: Compilation **fails** with error:
-     ```
-     ! LaTeX Error: Font T1/put/m/scit/12 not found.
-     ```
-   - **Option B**: Compilation **succeeds** with warnings like:
-     ```
-     LaTeX Font Warning: Font shape 'T1/put/m/scit' undefined
-     (Font)              using 'T1/put/m/sc' instead
-     ```
+2. **Expected Result**: Compilation **succeeds** with warnings like:
+   ```
+   LaTeX Font Warning: Font shape 'T1/put/m/scit' undefined
+   (Font)              using 'T1/put/m/it' instead
+   ```
 
-3. **Location in MWE**: Lines 30-31 contain the problematic text
+3. **Location in MWE**: Lines 30, 42-44 contain the problematic text
 
-**Note**: Whether it fails or warns, the bug exists - the font shapes are undefined and need to be declared.
+**Note**: While compilation succeeds, these warnings indicate missing font shape declarations that should be added for cleaner output and better portability.
 
 ---
 
@@ -66,9 +62,10 @@ The `econsocart.cls` document class uses the **Utopia font family** (T1/put enco
 2. LaTeX interprets this as: "Switch to small caps, then switch to italic"
 3. LaTeX looks for font shape: `T1/put/m/scit/12` (small caps + italic)
 4. `t1put.fd` does not define this shape
-5. LaTeX behavior varies by distribution:
-   - **Stricter systems**: Compilation error (no fallback available)
-   - **Lenient systems**: Warning + automatic substitution (uses `sc` instead of `scit`)
+5. LaTeX behavior (on modern distributions):
+   - **Warning issued**: "Font shape 'T1/put/m/scit' undefined"
+   - **Automatic substitution**: Falls back to available shape (e.g., uses `it` instead of `scit`)
+   - **Compilation continues**: Document is produced successfully
 
 ### Why This Matters
 
@@ -163,23 +160,23 @@ In the class file, after font loading (around line 100-200):
 
 ### Automated Test (Recommended)
 
-Run the compile script to test both bug and fix:
+Run the compile script to test both warning case and fix:
 
 ```bash
 ./compile.sh
 ```
 
 This will:
-1. Compile `mwe-font-shape.tex` (may fail or succeed with warnings, depending on system)
-2. Compile `mwe-font-shape-fixed.tex` (should succeed WITHOUT errors or warnings)
-3. Generate `mwe-font-shape-fixed.pdf` showing the fix works
-4. Show comparison proving the workaround eliminates the problem
+1. Compile `mwe-font-shape.tex` (succeeds with font shape warnings)
+2. Compile `mwe-font-shape-fixed.tex` (succeeds WITHOUT warnings)
+3. Generate both PDFs showing the fix works
+4. Show comparison proving the workaround eliminates the warnings
 
 ### Manual Test
 
 1. **Apply workaround**: See `mwe-font-shape-fixed.tex` which includes `\usepackage{workaround}`
 2. **Compile**: `pdflatex mwe-font-shape-fixed.tex`
-3. **Expected**: Compilation succeeds without errors ✅
+3. **Expected**: Compilation succeeds without warnings ✅
 4. **Visual Check**: Text appears with small caps (italic aspect gracefully degrades to non-italic small caps)
 
 ### ✅ Workaround Status: PROVEN TO WORK
@@ -192,11 +189,11 @@ The file `mwe-font-shape-fixed.tex` demonstrates that the workaround successfull
 
 | File | Purpose |
 |------|---------|
-| `mwe-font-shape.tex` | Minimal example that triggers the bug |
-| `mwe-font-shape-fixed.tex` | ✅ **Demonstrates workaround works** |
-| `README.md` | This file - detailed bug explanation |
-| `compile.sh` | Tests **both** bug and fix |
-| `workaround.sty` | **Proven** fix implementation |
+| `mwe-font-shape.tex` | Minimal example that triggers the warnings |
+| `mwe-font-shape-fixed.tex` | ✅ **Demonstrates workaround eliminates warnings** |
+| `README.md` | This file - detailed issue explanation |
+| `compile.sh` | Tests **both** warning case and fix |
+| `workaround.sty` | **Proven** workaround implementation |
 
 ---
 
@@ -215,19 +212,20 @@ The file `mwe-font-shape-fixed.tex` demonstrates that the workaround successfull
 
 ## Impact Assessment
 
-**Severity**: 🟠 **Major**
+**Severity**: 🟡 **Minor** (Code Quality Issue)
 
 **Reason**: 
-- **Inconsistent behavior** across TeX distributions (some fail, some warn)
-- **When it fails**: Complete compilation failure (blocking)
-- **When it warns**: Silent font substitution may degrade typography
-- **Common patterns**: Many documents naturally use these combinations
+- **Produces warnings** but does not block compilation
+- **Automatic font substitution** works reasonably well
+- **No visual defects** in most cases (graceful degradation)
+- **Common patterns**: Many documents naturally use these combinations, producing unnecessary warnings
 - **Multiple combinations affected**: scit, scsl, slit across different weights
+- **Main impact**: Warning messages clutter compilation logs
 
 **Affected Users**:
-- Any QE submission using nested text formatting
-- Documents with journal/book titles in citations
-- Papers emphasizing proper nouns or foreign phrases
+- QE submissions using nested text formatting will see warnings
+- Users who prefer clean compilation logs
+- Authors who want to ensure proper font shape declarations
 
 ---
 
@@ -239,14 +237,14 @@ The file `mwe-font-shape-fixed.tex` demonstrates that the workaround successfull
 - This is specific to Utopia font in T1 encoding
 
 **Workaround Trade-offs**:
-- ✅ Allows compilation to succeed
+- ✅ Eliminates compilation warnings
 - ✅ Produces acceptable output (small caps only)
-- ⚠️ Loses italic/slanted aspect of combined style
-- ⚠️ Requires manual addition to each document
+- ⚠️ Loses italic/slanted aspect of combined style (same as automatic substitution)
+- ⚠️ Requires manual addition to each document (or class file modification)
 
 ---
 
-**Status**: Ready for bug report to Econometric Society  
+**Status**: Documentation of font shape warnings in econsocart.cls  
 **Contact**: Christopher Carroll (ccarroll@jhu.edu)  
-**Date**: November 4, 2025
+**Date**: November 4, 2025 (Updated: November 8, 2025)
 

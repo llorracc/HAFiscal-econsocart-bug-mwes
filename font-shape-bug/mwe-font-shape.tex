@@ -1,5 +1,5 @@
-% Minimal Working Example: Font Shape Error in econsocart.cls
-% Bug: LaTeX Error: Font T1/put/m/scit/12 not found
+% Minimal Working Example: Font Shape Warning in econsocart.cls
+% Issue: LaTeX Font Warning: Font shape 'T1/put/m/scit' undefined
 % Date: November 4, 2025
 
 \documentclass[qe]{econsocart}
@@ -7,8 +7,8 @@
 \begin{document}
 
 \begin{frontmatter}
-\title{Font Shape Bug Demonstration}
-\runtitle{Font Shape Bug Demonstration}
+\title{Font Shape Warning Demonstration}
+\runtitle{Font Shape Warning Demonstration}
 
 \begin{aug}
 \author[add1]{\fnms{Christopher}~\snm{Carroll}\ead[label=e1]{ccarroll@jhu.edu}}
@@ -16,32 +16,34 @@
 \end{aug}
 
 \begin{abstract}
-This minimal document demonstrates a font shape error in the \texttt{econsocart.cls} 
-document class when using small caps combined with italic emphasis.
+This minimal document demonstrates font shape warnings in the \texttt{econsocart.cls} 
+document class when using small caps combined with italic emphasis. The document 
+compiles successfully but produces warnings about undefined font shapes.
 \end{abstract}
 \end{frontmatter}
 
 \section{The Problem}
 
-This paragraph contains normal text. Now we demonstrate the bug:
+This paragraph contains normal text. Now we demonstrate the issue:
 
-% THIS LINE TRIGGERS THE BUG:
+% THIS LINE TRIGGERS THE WARNING:
 This text uses \textsc{small caps} and this uses \textit{italic}, 
 but combining them as \textsc{\textit{small caps italic}} causes:
 
-\textbf{LaTeX Error: Font T1/put/m/scit/12 not found}
+\textbf{LaTeX Font Warning: Font shape `T1/put/m/scit' undefined}
 
-The error occurs because the Utopia font (T1/put) does not define the 
-\texttt{scit} font shape (small caps + italic combined).
+The warning occurs because the Utopia font (T1/put) does not define the 
+\texttt{scit} font shape (small caps + italic combined). LaTeX substitutes 
+an available shape and continues compilation.
 
 \section{Additional Problematic Combinations}
 
-The following font shape combinations are also undefined:
+The following font shape combinations are also undefined (each produces warnings):
 
 \begin{itemize}
-    \item \texttt{scit}: small caps + italic → \textsc{\textit{fails here}}
-    \item \texttt{scsl}: small caps + slanted → \textsc{\textsl{fails here}}
-    \item \texttt{slit}: slanted + italic → \textsl{\textit{fails here}}
+    \item \texttt{scit}: small caps + italic → \textsc{\textit{produces warning}}
+    \item \texttt{scsl}: small caps + slanted → \textsc{\textsl{produces warning}}
+    \item \texttt{slit}: slanted + italic → \textsl{\textit{produces warning}}
 \end{itemize}
 
 \section{Expected vs. Actual Behavior}
@@ -49,10 +51,12 @@ The following font shape combinations are also undefined:
 \textbf{Expected}: LaTeX should either:
 \begin{enumerate}
     \item Provide the combined font shape, or
-    \item Silently substitute a close approximation
+    \item Silently substitute a close approximation without warnings
 \end{enumerate}
 
-\textbf{Actual}: Compilation fails with an error, preventing document generation.
+\textbf{Actual}: Compilation succeeds with warnings. LaTeX substitutes available 
+shapes but issues warnings about undefined font shapes. The document is generated 
+successfully with acceptable typography.
 
 \end{document}
 

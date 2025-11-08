@@ -1,18 +1,18 @@
-% Minimal Working Example: Font Shape Error FIX
-% This version demonstrates that the workaround SOLVES the font shape bug
+% Minimal Working Example: Font Shape Warning FIX
+% This version demonstrates that the workaround ELIMINATES the font shape warnings
 % Date: November 4, 2025
 
 \documentclass[qe]{econsocart}
 
 % *** WORKAROUND APPLIED ***
-% This line fixes the font shape bug by declaring missing font shapes
+% This line eliminates font shape warnings by declaring missing font shapes
 \usepackage{workaround}
 
 \begin{document}
 
 \begin{frontmatter}
-\title{Font Shape Bug Demonstration (WITH WORKAROUND)}
-\runtitle{Font Shape Bug Demonstration (WITH WORKAROUND)}
+\title{Font Shape Warning Demonstration (WITH WORKAROUND)}
+\runtitle{Font Shape Warning Demonstration (WITH WORKAROUND)}
 
 \begin{aug}
 \author[add1]{\fnms{Christopher}~\snm{Carroll}\ead[label=e1]{ccarroll@jhu.edu}}
@@ -20,9 +20,9 @@
 \end{aug}
 
 \begin{abstract}
-This version demonstrates that the workaround SUCCESSFULLY FIXES the font shape 
-error. This document uses \texttt{workaround.sty} which declares the missing 
-font shapes, allowing compilation to succeed.
+This version demonstrates that the workaround SUCCESSFULLY ELIMINATES the font shape 
+warnings. This document uses \texttt{workaround.sty} which declares the missing 
+font shapes, allowing clean compilation without warnings.
 \end{abstract}
 \end{frontmatter}
 
@@ -30,12 +30,12 @@ font shapes, allowing compilation to succeed.
 
 This document includes: \verb|\usepackage{workaround}|
 
-This package declares the missing font shape combinations, allowing LaTeX 
-to compile successfully.
+This package declares the missing font shape combinations, eliminating the 
+compilation warnings.
 
-\section{Testing Previously-Failing Combinations}
+\section{Testing Previously-Warning Combinations}
 
-All of these should now work WITHOUT errors:
+All of these should now work WITHOUT warnings:
 
 \subsection{Small Caps + Italic}
 
@@ -63,13 +63,13 @@ The following were the problematic combinations from the original MWE:
 
 \section{Verification}
 
-\textbf{Result}: This document compiles successfully WITHOUT errors.
+\textbf{Result}: This document compiles successfully WITHOUT warnings.
 
 \textbf{Visual Check}: While the combined font shapes degrade gracefully 
 (showing only small caps or slanted, not both attributes), the document 
-compiles and produces readable output.
+compiles cleanly and produces readable output.
 
-\textbf{Workaround Status}: ✅ \textbf{PROVEN TO WORK}
+\textbf{Workaround Status}: ✅ \textbf{PROVEN TO WORK - NO WARNINGS}
 
 \subsection{What the Workaround Does}
 
@@ -82,7 +82,7 @@ to map the missing combined shapes to available base shapes:
     \item \texttt{slit} (slanted + italic) → \texttt{sl} (slanted only)
 \end{itemize}
 
-This graceful degradation is preferable to compilation failure.
+This graceful degradation eliminates warnings while maintaining document quality.
 
 \end{document}
 
