@@ -1,0 +1,28 @@
+Submitted to Quantitative Economics
+
+Font Shape Bug Demonstration
+C HRISTOPHER C ARROLL
+Johns Hopkins University, NBER, and econ-ark.org
+This minimal document demonstrates a font shape error in the econsocart.cls
+document class when using small caps combined with italic emphasis.
+
+1. T HE P ROBLEM
+This paragraph contains normal text. Now we demonstrate the bug:
+This text uses SMALL CAPS and this uses italic, but combining them as small caps
+italic causes:
+LaTeX Error: Font T1/put/m/scit/12 not found
+The error occurs because the Utopia font (T1/put) does not define the scit font
+shape (small caps + italic combined).
+2. A DDITIONAL P ROBLEMATIC C OMBINATIONS
+The following font shape combinations are also undefined:
+• scit: small caps + italic → fails here
+• scsl: small caps + slanted → fails here
+• slit: slanted + italic → fails here
+3. E XPECTED VS . ACTUAL B EHAVIOR
+Expected: LaTeX should either:
+1. Provide the combined font shape, or
+2. Silently substitute a close approximation
+Actual: Compilation fails with an error, preventing document generation.
+
+Christopher Carroll: ccarroll@jhu.edu
+

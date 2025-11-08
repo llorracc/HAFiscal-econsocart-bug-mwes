@@ -166,15 +166,6 @@ HAFiscal-econsocart-bug-mwes/
 
 ---
 
-## How to Report These Bugs
-
-1. **Fork this repository** (optional, for reference)
-2. **Use the email template**: See `EMAIL-TEMPLATE.md`
-3. **Include links** to specific bug directories in this repository
-4. **Attach compiled PDFs** (if applicable) showing the visual defects
-
----
-
 ## Suggested Fixes
 
 ### For Font Shape Bug
