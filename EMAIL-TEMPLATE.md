@@ -1,54 +1,35 @@
-# Email Template for Reporting econsocart.cls Bugs
+# Email Template for Reporting econsocart.cls Bug
 
 **To**: Quantitative Economics Data Editor  
-**Subject**: Bug Reports in econsocart.cls Document Class
+**Subject**: Bug Report in econsocart.cls Document Class
 
 ---
 
 Dear Data Editor,
 
-I am writing to report two modest but problematic bugs discovered in the `econsocart.cls` document class (version 2.0, 2023/12/01) while preparing my submission to Quantitative Economics. While individually modest in scope, diagnosing their root causes and constructing reliable workarounds required considerable effort.
+I am writing to report a problematic bug discovered in the `econsocart.cls` document class (version 2.0, 2023/12/01) while preparing my submission to Quantitative Economics. While modest in scope, diagnosing the root cause and constructing a reliable workaround required considerable effort.
 
-I have created a standalone repository with Minimal Working Examples (MWEs) that demonstrate both issues, along with tested workarounds:
+I have created a standalone repository with a Minimal Working Example (MWE) that demonstrates the issue, along with a tested workaround:
 
 **Repository**: https://github.com/llorracc/HAFiscal-econsocart-bug-mwes  
-**Interactive Binder**: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/llorracc/HAFiscal-econsocart-bug-mwes/main?filepath=Interactive-Bug-Demonstrations-With-Workarounds.ipynb)  
+**Interactive Binder**: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/llorracc/HAFiscal-econsocart-bug-mwes/main?filepath=Interactive-Bug-Demonstrations-With-Workarounds.ipynb)
 **Docker Alternative**: Available for local reproduction (see repository README)
 
 ---
 
-## Bug #1: Font Shape Error (Major - Inconsistent Behavior)
+## Bug: Font Shape Warning
 
-**Error Message**: `LaTeX Error: Font T1/put/m/scit/12 not found`
+**Warning Message**: `LaTeX Font Warning: Font shape 'T1/put/m/scit' undefined`
 
 **Trigger**: Using `\textsc{\textit{...}}` (small caps + italic) or similar combined font shapes
 
 **MWE Location**: `font-shape-bug/`
 
-**Details**: The Utopia font family (`T1/put`) used by `econsocart.cls` does not define combined font shapes (`scit`, `scsl`, `slit`). When LaTeX encounters these combinations, compilation fails.
+**Details**: The Utopia font family (`T1/put`) used by `econsocart.cls` does not define combined font shapes (`scit`, `scsl`, `slit`). When LaTeX encounters these combinations, it produces warnings and substitutes available fonts. While compilation succeeds, the warnings clutter the build logs and indicate missing font shape declarations.
 
 **Suggested Fix**: Add `\DeclareFontShape` declarations to map missing shapes to available alternatives (detailed in the MWE README).
 
 **Workaround**: Included in `font-shape-bug/workaround.sty`
-
----
-
-## Bug #2: Garbled Headers in Draft Mode (Visual Defect)
-
-**Symptom**: Odd-page headers show concatenated journal name + title:
-```
-Submitted to Quantitative EconomicsWelfare and Spending Effects...
-```
-
-**Expected**: Only the paper title should appear on odd pages (right side)
-
-**MWE Location**: `headers-draft-bug/`
-
-**Details**: The `econsocart.cls` file (lines 1953-1956) incorrectly handles QE submissions in the `\ifecta@layout` conditional. QE sets `\qe@layouttrue` but not `\ecta@layouttrue`, causing it to fall into an `\else` branch designed for other journals.
-
-**Suggested Fix**: Add explicit QE handling to treat it like ECTA for header formatting (detailed in the MWE README).
-
-**Workaround**: Included in `headers-draft-bug/workaround.sty`
 
 ---
 
@@ -63,7 +44,6 @@ Click the Binder badge to launch an interactive environment:
 Then run:
 ```bash
 cd font-shape-bug/ && ./compile.sh
-cd ../headers-draft-bug/ && ./compile.sh
 ```
 
 ### Option 2: Use Docker (Containerized Local Environment)
@@ -73,7 +53,8 @@ git clone https://github.com/llorracc/HAFiscal-econsocart-bug-mwes.git
 cd HAFiscal-econsocart-bug-mwes
 docker build -t econsocart-bug-mwes .
 docker run -it --rm econsocart-bug-mwes
-# Then run compile scripts as in Option 1
+# Then run compile script
+cd font-shape-bug && ./compile.sh
 ```
 
 ### Option 3: Clone Repository Locally
@@ -81,35 +62,27 @@ docker run -it --rm econsocart-bug-mwes
 ```bash
 git clone https://github.com/llorracc/HAFiscal-econsocart-bug-mwes.git
 cd HAFiscal-econsocart-bug-mwes/font-shape-bug
-pdflatex mwe-font-shape.tex  # May fail or succeed with warnings (varies by system)
-cd ../headers-draft-bug
-pdflatex mwe-headers-draft.tex  # Compiles but headers are garbled
+pdflatex mwe-font-shape.tex  # Produces warnings
 ```
 
 ---
 
 ## Impact
 
-**Font Bug**: 
-- Severity: **Major** (behavior varies by TeX distribution)
-- Some systems: Compilation **fails** with font errors
-- Other systems: Compilation **succeeds** with warnings and font substitution
+**Font Warning**: 
+- Severity: **Minor** (code quality issue)
+- Produces compilation warnings but does not block compilation
+- LaTeX automatically substitutes fonts and continues
 - Affects any document using nested text formatting (e.g., `\textsc{\textit{...}}`)
 - Workaround is straightforward once diagnosed, but diagnosing required considerable effort
 
-**Headers Bug**:
-- Severity: **Major** (visual defect)
-- Creates unprofessional appearance in draft submissions
-- Affects all QE submissions using draft mode
-- Workaround implementation was non-trivial due to interaction with line numbering system
-
-While these bugs are individually modest in scope, both required significant time to diagnose and construct reliable workarounds. Authors currently need these workarounds to produce acceptable submissions.
+While this bug is modest in scope, it required significant time to diagnose and construct a reliable workaround. Authors currently need this workaround to produce warning-free submissions.
 
 ---
 
 ## Request
 
-I kindly request that these bugs be:
+I kindly request that this bug be:
 1. Forwarded to the maintainers of `econsocart.cls`
 2. Addressed in a future update to the document class
 3. Documented in submission guidelines until fixed
@@ -134,12 +107,8 @@ HAFiscal-econsocart-bug-mwes/
 ├── README.md                   # Overview and quick start
 ├── font-shape-bug/
 │   ├── README.md              # Detailed analysis
-│   ├── mwe-font-shape.tex     # Minimal example
-│   ├── compile.sh             # Test script
-│   └── workaround.sty         # Fix implementation
-├── headers-draft-bug/
-│   ├── README.md              # Detailed analysis
-│   ├── mwe-headers-draft.tex  # Minimal example
+│   ├── mwe-font-shape.tex     # Minimal example (produces warnings)
+│   ├── mwe-font-shape-fixed.tex # Demonstrates workaround
 │   ├── compile.sh             # Test script
 │   └── workaround.sty         # Fix implementation
 └── binder/                    # Binder configuration
@@ -147,13 +116,12 @@ HAFiscal-econsocart-bug-mwes/
 
 ---
 
-Thank you for your attention to these matters.
+Thank you for your attention to this matter.
 
 Best regards,  
 Christopher Carroll
 
 ---
 
-**Date**: November 4, 2025  
+**Date**: November 8, 2025  
 **Repository**: https://github.com/llorracc/HAFiscal-econsocart-bug-mwes
-

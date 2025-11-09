@@ -1,5 +1,5 @@
-# Dockerfile for econsocart.cls bug demonstrations
-# Provides a self-contained environment for reproducing bugs and testing workarounds
+# Dockerfile for econsocart.cls bug demonstration
+# Provides a self-contained environment for reproducing the bug and testing the workaround
 #
 # Build:  docker build -t econsocart-bug-mwes .
 # Run:    docker run -it --rm -v $(pwd):/workspace econsocart-bug-mwes
@@ -8,7 +8,7 @@
 FROM ubuntu:22.04
 
 LABEL maintainer="Christopher Carroll <ccarroll@jhu.edu>"
-LABEL description="Environment for demonstrating econsocart.cls bugs with workarounds"
+LABEL description="Environment for demonstrating econsocart.cls bug with workaround"
 LABEL version="1.0"
 
 # Prevent interactive prompts during package installation
@@ -42,32 +42,25 @@ WORKDIR /workspace
 # Copy repository contents
 COPY . /workspace/
 
-# Make compile scripts executable
-RUN chmod +x font-shape-bug/compile.sh headers-draft-bug/compile.sh
+# Make compile script executable
+RUN chmod +x font-shape-bug/compile.sh
 
 # Display welcome message
 RUN echo '#!/bin/bash' > /usr/local/bin/welcome && \
     echo 'cat << "EOF"' >> /usr/local/bin/welcome && \
     cat >> /usr/local/bin/welcome << 'EOF'
 ╔════════════════════════════════════════════════════════════╗
-║  econsocart.cls Bug Demonstrations                         ║
+║  econsocart.cls Bug Demonstration                          ║
 ║  Docker Container Environment                              ║
 ╚════════════════════════════════════════════════════════════╝
 
 This container provides a complete LaTeX environment for
-reproducing two modest bugs in econsocart.cls.
+reproducing a font shape bug in econsocart.cls.
 
 ┌────────────────────────────────────────────────────────────┐
-│ Bug 1: Font Shape Error (Compilation Failure)             │
+│ Font Shape Warning Bug                                     │
 ├────────────────────────────────────────────────────────────┤
 │   cd font-shape-bug/                                       │
-│   ./compile.sh                                             │
-└────────────────────────────────────────────────────────────┘
-
-┌────────────────────────────────────────────────────────────┐
-│ Bug 2: Garbled Headers (Visual Defect)                    │
-├────────────────────────────────────────────────────────────┤
-│   cd headers-draft-bug/                                    │
 │   ./compile.sh                                             │
 └────────────────────────────────────────────────────────────┘
 
@@ -81,16 +74,5 @@ reproducing two modest bugs in econsocart.cls.
 Documentation:
   - README.md (overview)
   - font-shape-bug/README.md
-  - headers-draft-bug/README.md
-  - EMAIL-TEMPLATE.md (for reporting bugs)
-
-EOF
-    echo 'EOF' >> /usr/local/bin/welcome && \
-    chmod +x /usr/local/bin/welcome
-
-# Display welcome on container start
-RUN echo 'welcome' >> /root/.bashrc
-
-# Default command: interactive shell
-CMD ["/bin/bash"]
+  - EMAIL-TEMPLATE.md (for reporting bug)
 
